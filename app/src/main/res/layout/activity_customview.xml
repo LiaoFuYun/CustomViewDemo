@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="10dp"
-        app:circle_color="@android:color/holo_green_light" />
+        app:circle_color="@android:color/holo_blue_light" />
 
     <Button
         android:id="@+id/changeBtn"

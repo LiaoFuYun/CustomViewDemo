@@ -4,12 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.lfy.customviewdemo.bean.PieBean;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,7 @@ public class PieView extends View {
         defaultHeight = context.getResources().getDisplayMetrics().heightPixels;
     }
 
-    public void setPieList(@NotNull ArrayList<PieBean> pieList) {
+    public void setPieList(@NonNull ArrayList<PieBean> pieList) {
         this.pieList = pieList;
         invalidate();
     }

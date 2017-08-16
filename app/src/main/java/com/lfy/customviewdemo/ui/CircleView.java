@@ -4,9 +4,12 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -56,7 +59,7 @@ public class CircleView extends View {
         mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 
 //        beginRecord();
-//        mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.checkmark);
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.checkmark);
     }
 
     @Override
@@ -199,19 +202,19 @@ public class CircleView extends View {
 //        pictureDrawable.setBounds(new Rect(0, 0, 500, 500));
 //        pictureDrawable.draw(canvas);
 
-//        canvas.translate(mWidth / 2, mHeight / 2);
-//        canvas.drawCircle(0, 0, 240, mPaint);
+        canvas.translate(mWidth / 2, mHeight / 2);
+        canvas.drawCircle(0, 0, 240, mPaint);
 //
-//        int bitmapHeight = mBitmap.getHeight();
+        int bitmapHeight = mBitmap.getHeight();
 //
-//        Rect bitmapRec = new Rect((animatedValue - 1) * bitmapHeight, 0, animatedValue * bitmapHeight, bitmapHeight);
-//        RectF rectF = new RectF(-bitmapHeight, -bitmapHeight, bitmapHeight, bitmapHeight);
-//        canvas.drawBitmap(mBitmap, bitmapRec, rectF, mPaint);
+        Rect bitmapRec = new Rect((animatedValue - 1) * bitmapHeight, 0, animatedValue * bitmapHeight, bitmapHeight);
+        RectF rectF = new RectF(-bitmapHeight, -bitmapHeight, bitmapHeight, bitmapHeight);
+        canvas.drawBitmap(mBitmap, bitmapRec, rectF, mPaint);
 
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setTextSize(50);
-        char[] text = "我是廖福赟".toCharArray();
-        canvas.drawText(text, 2, 3, 300, 500, mPaint);
+//        mPaint.setStyle(Paint.Style.FILL);
+//        mPaint.setTextSize(50);
+//        char[] text = "我是廖福赟".toCharArray();
+//        canvas.drawText(text, 2, 3, 300, 500, mPaint);
 //        canvas.drawPosText(text, 2, 3, new float[]{100, 100, 200, 200, 300, 300}, mPaint);
     }
 
@@ -240,7 +243,7 @@ public class CircleView extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-//        mBitmap.recycle();
+        mBitmap.recycle();
     }
 
     public void checkDo() {
