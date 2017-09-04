@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleRatingBar">
+        <attr name="mStarNum" format="integer"/>
+        <attr name="mStarWidth" format="integer"/>
+        <attr name="mStarHeight" format="integer"/>
+        <attr name="mStarSpacing" format="integer"/>
+        <attr name="mStarResId_on" format="reference"/>
+        <attr name="mStarResId_off" format="reference"/>
+        <attr name="mScore" format="float"/>
+        <attr name="mBackground" format="reference"/>
+    </declare-styleable>
+</resources>
