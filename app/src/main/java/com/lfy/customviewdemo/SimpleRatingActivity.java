@@ -1,6 +1,5 @@
 package com.lfy.customviewdemo;
 
-import android.graphics.Path;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +20,8 @@ public class SimpleRatingActivity extends AppCompatActivity implements View.OnCl
     private SimpleRatingBar simpleRatingBar;
     private EditText editText;
     private Button calcBtn;
+    private Button isIndicatorBtn;
+    private boolean isIndicator = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,22 +30,31 @@ public class SimpleRatingActivity extends AppCompatActivity implements View.OnCl
         simpleRatingBar = (SimpleRatingBar) findViewById(R.id.simpleRatingBar);
         editText = (EditText) findViewById(R.id.editText);
         calcBtn = (Button) findViewById(R.id.calcBtn);
+        isIndicatorBtn = (Button) findViewById(R.id.isIndicatorBtn);
         calcBtn.setOnClickListener(this);
+        isIndicatorBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        String str = editText.getText().toString();
-        if (TextUtils.isEmpty(str)) {
-            Toast.makeText(SimpleRatingActivity.this, "分数不能为空", Toast.LENGTH_SHORT).show();
-            return;
+        switch (view.getId()) {
+            case R.id.calcBtn:
+                String str = editText.getText().toString();
+                if (TextUtils.isEmpty(str)) {
+                    Toast.makeText(SimpleRatingActivity.this, "分数不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                try {
+                    float score = Float.parseFloat(str);
+                    simpleRatingBar.setScore(score);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.isIndicatorBtn:
+                isIndicator = !isIndicator;
+                simpleRatingBar.setIsIndicator(isIndicator);
+                break;
         }
-        try {
-            float score = Float.parseFloat(str);
-            simpleRatingBar.setScore(score);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 }

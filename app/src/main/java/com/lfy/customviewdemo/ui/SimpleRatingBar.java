@@ -40,6 +40,8 @@ public class SimpleRatingBar extends View {
     private int mStartX = 0;
     private int mStartY = 0;
 
+    private boolean isIndicator = true;
+
     private Paint mPaint;
 
     public SimpleRatingBar(Context context) {
@@ -160,6 +162,9 @@ public class SimpleRatingBar extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (isIndicator) {// 如果只当做评分指示器用不提供触摸事件
+            return super.onTouchEvent(event);
+        }
         float eventX = event.getX();
         float eventY = event.getY();
         if (eventX < mStartX || eventX > mWidth - mStartX
@@ -222,6 +227,11 @@ public class SimpleRatingBar extends View {
             rating = 1f;
         }
         return rating;
+    }
+
+    // 设置是否只当做评分指示器
+    public void setIsIndicator(boolean isIndicator) {
+        this.isIndicator = isIndicator;
     }
 
     // 设置评分（0-10分）
