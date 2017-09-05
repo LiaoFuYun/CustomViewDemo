@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lfy.customviewdemo.ui.SimpleRatingBar;
@@ -19,6 +20,7 @@ public class SimpleRatingActivity extends AppCompatActivity implements View.OnCl
 
     private SimpleRatingBar simpleRatingBar;
     private EditText editText;
+    private TextView scoreTv;
     private Button calcBtn;
     private Button isIndicatorBtn;
     private boolean isIndicator = true;
@@ -28,6 +30,15 @@ public class SimpleRatingActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simplerating);
         simpleRatingBar = (SimpleRatingBar) findViewById(R.id.simpleRatingBar);
+        scoreTv = (TextView) findViewById(R.id.scoreTv);
+
+        simpleRatingBar.setOnScoreChangeListener(new SimpleRatingBar.OnScoreChangeListener() {
+            @Override
+            public void onScoreChange(float score) {
+                scoreTv.setText(score + "");
+            }
+        });
+
         editText = (EditText) findViewById(R.id.editText);
         calcBtn = (Button) findViewById(R.id.calcBtn);
         isIndicatorBtn = (Button) findViewById(R.id.isIndicatorBtn);

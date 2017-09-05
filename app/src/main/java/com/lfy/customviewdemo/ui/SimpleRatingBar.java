@@ -40,9 +40,12 @@ public class SimpleRatingBar extends View {
     private int mStartX = 0;
     private int mStartY = 0;
 
-    private boolean isIndicator = true;
+    // 是否作为指示器使用
+    private boolean isIndicator;
 
     private Paint mPaint;
+
+    private OnScoreChangeListener onScoreChangeListener = null;
 
     public SimpleRatingBar(Context context) {
         this(context, null);
@@ -56,13 +59,14 @@ public class SimpleRatingBar extends View {
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SimpleRatingBar);
         mStarNum = a.getInteger(R.styleable.SimpleRatingBar_mStarNum, 5);
-        mStarWidth = dp2Px(context, a.getInteger(R.styleable.SimpleRatingBar_mStarWidth, 30));
-        mStarHeight = dp2Px(context, a.getInteger(R.styleable.SimpleRatingBar_mStarHeight, 30));
-        mStarSpacing = dp2Px(context, a.getInteger(R.styleable.SimpleRatingBar_mStarSpacing, 5));
+        mStarWidth = a.getDimensionPixelOffset(R.styleable.SimpleRatingBar_mStarWidth, 60);
+        mStarHeight = a.getDimensionPixelOffset(R.styleable.SimpleRatingBar_mStarHeight, 60);
+        mStarSpacing = a.getDimensionPixelOffset(R.styleable.SimpleRatingBar_mStarSpacing, 10);
         mRatingOnDrawable = a.getDrawable(R.styleable.SimpleRatingBar_mStarResId_on);
         mRatingOffDrawable = a.getDrawable(R.styleable.SimpleRatingBar_mStarResId_off);
         mScore = a.getFloat(R.styleable.SimpleRatingBar_mScore, 2f);
         mBackground = a.getResourceId(R.styleable.SimpleRatingBar_mBackground, Color.WHITE);
+        isIndicator = a.getBoolean(R.styleable.SimpleRatingBar_mIsIndicator, true);
         a.recycle();
         init();
     }
@@ -179,8 +183,14 @@ public class SimpleRatingBar extends View {
                 mTempRating = (eventX * 1.0f - mStartX) / (ratingBarWidth * 1.0f / mStarNum);
                 if (mTempRating - (int) mTempRating >= 0.5) {
                     mTempRating = (int) mTempRating + 1;
+                } else {
+                    mTempRating = (int) mTempRating + 0.5f;
                 }
                 if (mTempRating >= 1) {
+                    mScore = mTempRating * 2f;
+                    if (onScoreChangeListener != null) {
+                        onScoreChangeListener.onScoreChange(mScore);
+                    }
                     invalidate();
                 }
                 break;
@@ -197,11 +207,6 @@ public class SimpleRatingBar extends View {
         drawable.setBounds(0, 0, mStarWidth, mStarHeight);
         drawable.draw(canvas);
         return bitmap;
-    }
-
-    private int dp2Px(Context context, float dp) {
-        float density = context.getResources().getDisplayMetrics().density;
-        return (int) (dp * density + 0.5f);
     }
 
     // 10分制转5颗星制(参考豆瓣)
@@ -234,6 +239,31 @@ public class SimpleRatingBar extends View {
         this.isIndicator = isIndicator;
     }
 
+    public void setStarNum(int starNum) {
+        this.mStarNum = starNum;
+    }
+
+    public void setStarSize(int starSize) {
+        this.mStarWidth = starSize;
+        this.mStarHeight = starSize;
+    }
+
+    public void setStarSpacing(int starSpacing) {
+        this.mStarSpacing = starSpacing;
+    }
+
+    public void setRatingOnDrawable(Drawable ratingOnDrawable) {
+        this.mRatingOnDrawable = ratingOnDrawable;
+    }
+
+    public void setRatingOffDrawable(Drawable ratingOffDrawable) {
+        this.mRatingOffDrawable = ratingOffDrawable;
+    }
+
+    public void setBackground(int backgroundResId) {
+        this.mBackground = backgroundResId;
+    }
+
     // 设置评分（0-10分）
     public void setScore(float score) throws Exception {
         if (score < 0 || score > 10) {
@@ -242,5 +272,20 @@ public class SimpleRatingBar extends View {
         this.mScore = score;
         this.mTempRating = score2Rating(score);
         invalidate();
+    }
+
+    // 获取评分
+    public float getScore() {
+        return mScore;
+    }
+
+    // 设置分数改变通知
+    public void setOnScoreChangeListener(@Nullable OnScoreChangeListener listener) {
+        this.onScoreChangeListener = listener;
+    }
+
+    // 分数改变监听
+    public interface OnScoreChangeListener {
+        void onScoreChange(float score);
     }
 }

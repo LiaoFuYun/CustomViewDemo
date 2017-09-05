@@ -5,15 +5,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lfy.customviewdemo.ui.SimpleRatingBar
-        android:id="@+id/simpleRatingBar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mScore="1"
-        app:mStarNum="5"
-        app:mStarResId_off="@mipmap/rating_off"
-        app:mStarResId_on="@mipmap/rating_on"
-        app:mStarSpacing="5" />
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.lfy.customviewdemo.ui.SimpleRatingBar
+            android:id="@+id/simpleRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:mScore="5"
+            app:mStarHeight="25dp"
+            app:mStarNum="5"
+            app:mStarResId_off="@mipmap/rating_off"
+            app:mStarResId_on="@mipmap/rating_on"
+            app:mStarSpacing="5dp"
+            app:mStarWidth="25dp" />
+
+        <TextView
+            android:id="@+id/scoreTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="5.0"
+            android:textColor="#ff5000"
+            android:textSize="22sp" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/editText"
